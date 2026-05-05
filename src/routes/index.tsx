@@ -74,15 +74,15 @@ function Index() {
           const sig = res.signal as Signal;
           setSignal(sig);
           if (sig.direction !== "WAIT") {
-            setHistory((h) => [
-              {
+            setHistory((h) => {
+              const entry: HistoryEntry = {
                 id: crypto.randomUUID(),
                 signal: sig,
                 ts: Date.now(),
                 result: "PENDING",
-              },
-              ...h,
-            ].slice(0, 50));
+              };
+              return [entry, ...h].slice(0, 50);
+            });
             // optional sound
             try {
               const ctx = new AudioContext();
